@@ -5,7 +5,7 @@ db.developer_tb.insertMany([
     {
         "id": 1,
         "name": "python",
-        "type": "developer"
+        "type": "lang"
     },
     {
         "id": 2,

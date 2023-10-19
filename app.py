@@ -8,11 +8,11 @@ app = Flask(__name__)
 def get_db():
     client = MongoClient(host='test_mongodb',
                          port=27017,
-                         user='root',
+                         username='root',
                          password='pass',
-                         authSource='admin')
+                         authSource="admin")
     
-    db = client('developer_db')
+    db = client.developer_db
     return db
 
 
@@ -29,11 +29,10 @@ def fetch_developers():
         _developers = db.developer_tb.find()
         developers = [{"id": developer["id"], "name": developer["name"], "type": developer["type"]} for developer in _developers]
         return jsonify({"developers": developers})
-    except:
-        pass
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
     finally:
-        if type(db)==MongoClient:
-            db.close()
+        db.client.close()
 
 # Create a list to act as a simple database.
 database = ['ab-list','ab-list2']
